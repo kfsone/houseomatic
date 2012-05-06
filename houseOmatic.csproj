@@ -69,13 +69,13 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>75D16BF043802FF1FF2F0C6DECFF0FAB21CFA330</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4A6D3BDAA114071CD402741D46EEE7F4C3813818</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>hom.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>houseOmatic.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -91,7 +91,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>hom.pfx</ManifestKeyFile>
+    <ManifestKeyFile>houseOmatic.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
