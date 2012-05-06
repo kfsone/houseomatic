@@ -128,7 +128,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="app.config" />
-    <None Include="hom.pfx" />
     <None Include="houseOmatic.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
