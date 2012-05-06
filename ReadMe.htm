@@ -1,0 +1,232 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>HouseOMatic Readme</title>
+<style type='text/css'>
+body, table, tr, th, td, div, center, span {
+ margin:	0px 0px;
+ border:	0px 0px;
+ padding:	0px 0px;
+}
+
+body {
+ font-family: Arial, Helvetica, Sans-serf;
+}
+
+h1, h2, h3, h4, h5 {
+ margin: 8px 8px 0px 0px;
+}
+
+.note 
+{
+ border: 4px dotted blue;
+ padding: 12px 20px 12px 20px;
+ background-color: #ffffa0;
+ color: blue;
+ font-weight: bold;
+ font-size: smaller;
+ margin: 2px 8px 2px 8px;
+}
+
+.note P
+{
+    padding: 8px;
+}
+
+.note:before 
+{
+ font-family: Cursive;
+ font-size: larger;
+ content: "Note!";
+}
+
+td, .c, .l, .r {
+ padding: 3px;
+}
+
+:link { color: #000090; font-weight: bold; }
+:visited { color: #8060a0; font-weight: bold; }
+:active { color: #600090; }
+
+A.opt, A.optsel, A.opt:visited, A.optsel:visited, A.opt:hover, A.optsel:hover { color: #000090; }
+A.opt:hover { background-color: #8080f0; text-decoration: underline; }
+A.optselected { background-color: #a0a0ff; text-decoration: underline; }
+A.optselected:hover { background-color: #c0c0ff; }
+A.optselected {
+ padding-left: 4px; padding-right: 4px;
+ padding-top: 2px; padding-bottom: 2px;
+ text-decoration: none;
+ font-weight: bold;
+}
+A.opt {
+ padding-left: 2px;
+ padding-right: 2px;
+ margin-left: 2px;
+ text-decoration: none;
+}
+
+dt { font-weight: bold; padding: 0px; margin: 0px;}
+dd { font-size: smaller; padding: 0px; margin: 0px;}
+dd ul { padding-top: 0px; margin-top: 0px; }
+
+.content {
+ padding-left: 14px;
+ padding-right: 14px;
+ padding-top: 12px;
+ padding-bottom: 20px;
+ background: #ffffff;
+ color: #000000;
+}
+
+.error { color: red; }
+
+.result, .error { border: 1px dashed gray; padding: 12px; }
+
+.kfs { padding: 1px; font: Arial, Helvetica, Sans-serif; }
+
+TABLE.nt { background-color: #e0e0ff; width: 100%; }
+TABLE.nt TD {
+ border-bottom: solid 1px blue; margin: 0 0 0 0; padding: 0 0 0 0;
+}
+TABLE.nt SPAN {
+ border-left: solid 1px blue; font-size: smaller;
+ padding-left: 2px;
+ padding-right: 3px;
+}
+
+.l0, .c0, .r0 { background-color: #e0e0f8 ; }
+.l, .l1, .c, .c1, .r, .r1 { background-color: #f8f8f8 ; }
+.l, .l0, .l1 { text-align: left; }
+.c, .c0, .c1 { text-align: center; }
+.r, .r0, .r1 { text-align: right; }
+
+.titlebox {
+ border: 0 none;
+ width: 100%;
+ padding: 4px;
+ margin-bottom: 4px;
+}
+TABLE.titlebox TD {
+ background-color: #ffffff; color: #000060;
+}
+</style>
+	</head>
+<body>
+
+<table class="nt" width="100%" cellspacing='0'>
+<tr>
+<td width="120" align="left"><a href='http://www.kfs.org/houseOmatic/'><img src='images/homtxt.png' title="hOm" /></a></td>
+<td>houseOmatic</td>
+<td align='right'>
+ <span><a class='opt' href='#changes'>Changes</a></span>
+ <span><a class='opt' href='#about'>About</a></span>
+ <span><a class='opt' href='#usage'>Usage</a></span>
+ <span><a class='opt' href='#credits'>Credits</a></span>
+</td>
+</tr>
+</table>
+
+<table width="100%" class='titlebox'>
+<tr>
+ <td rowspan="2" width="200" align="center"><img src='images/homtitle.png' /></td>
+ <td align='center'><h1>HouseOMatic Readme</h1></td>
+</tr>
+<tr><td align='center' style='font-size:smaller;'>Copyright (C) Oliver 'kfs1' Smith, 2011.</td></tr>
+</table>
+
+<hr />
+
+<div class="content">
+<a name="changes" />
+<h2>Recent Changes.</h2>
+<dl>
+<dt>0.9.4.0</dt>
+<dd><ul><li>Layout format 6 support.</li></ul></dd>
+<dt>0.9.3.1</dt>
+<dd><ul><li>Fixed ReadMe always showing up.</li></ul></dd>
+<dt>0.9.3.0</dt>
+<dd><ul><li>Added ReadMe and ReadMe viewer (only supposed to show once per release).</li></ul></dd>
+<dt>0.9.2.1</dt>
+<dd><ul><li>Added color coding to multi-select.</li></ul></dd>
+<dt>0.9.2.0</dt>
+<dd>
+    <ul>
+    <li>Enabled multi-selection of items:
+        <ul>
+        <li>CTRL+Click adds/removes items to current selection.</li>
+        <li>SHIFT+Click selects a range of items.</li>
+        <li>Click+hold and drag to "draw" a selection.</li>
+        </ul>
+    </li>
+    <li>Enabled change-multiple items (multi-select items to change, enter new value).</li>
+    </ul></dd>
+</dl>
+<hr />
+<a name="about" />
+<h2>About HouseOMatic.</h2>
+<p>HouseOMatic is an <a href='http://www.everquest2.com'>EverQuest 2</a> House Layout file editor.
+These are <i>local</i> files generated when you access the door to an EQ2 house and select "Save Layout".</p>
+
+<p>While assisting Sadeh of EQ2X's Freeport server, we discovered that loading a layout file can get very
+slow as you start to fill up a guild hall. More importantly, we found that the layout file isn't absolute:
+loading a layout file that doesn't match the house contents doesn't cause items to go missing.</p>
+    
+<p>This means that if you are working on a small set of items, you can delete everything else from your
+layout file and speed up the loading process!</p>
+
+<hr />
+<a name="usage" />
+<h2>Using HouseOMatic.</h2>
+
+<h3>Saving house layouts.</h3>
+<p>In order to work with houseOmatic (hOm), you're going to need one or
+more house layout files.</p>
+
+<p>Saving a layout is easy. Go to the house/guild hall, click the door and
+select the "<b>Access</b>" menu item. Click the "<b>Save Layout</b>"
+button, enter a name for the layout, and you're done.</p>
+
+<h3>Getting started...</h3>
+<p>When you fire up hOm you are presented with a simple window with an
+Open button. I'm honestly not sure why I make you click the Open button
+to get started, but it seemed like the right thing to do. ;-P</p>
+
+<p>After you click Open, hOm will display a standard Open File dialog.
+The first time you run hOm, you may need to guide it to the EQ2 folder
+and more specifically the <strong>saved_house_layouts</strong> folder.</p>
+
+<p>Of course, this assumes you <i>have</i> any saved layouts. See above.</p>
+
+<p>Once you've loaded a layout into hOm, you'll be presented with a grid
+view showing you all the items that were saved in the layout.</p>
+
+<div class='note'>
+<p>Layouts don't have to contain all of the items in a house, and houses don't have to contain all the items a layout.</p>
+<p>When you load the layout into EQ2, it'll apply changes to whichever items are both in the layout and in the house.</p>
+</div>
+
+<h3>Editing.</h3>
+
+<p>Coming soon...</p>
+
+<hr />
+<a name="credits" />
+<h2>Credits.</h2>
+
+<ul>
+    <li>Author: <a href='http://www.kfs.org/~oliver/'>Oliver 'kfs1' Smith</a>, aka Lungar.</li>
+    <li>Inspiration: Sadeh of Freeport Server *hugs*.</li>
+    <li>Jexi. I can't believe you edit by hand!</li>
+    <li>Sony. We really need better in-game editing :(</li>
+</ul>
+</div>
+
+<hr />
+
+<h4 style='text-align: center;'>Copyright (C) Oliver 'kfs1' Smith 2011.</h4>
+<div style='text-align: center;'>Oliver Smith is not affiliated with, representative of, contracted or employed by Sony Online Entertainment or any of their subsidiaries or divisions.</div>
+<div style='text-align: center;'>SOE, EverQuest and EverQuest II are trademarks of Sony Online Entertainment.</div>
+<div style='text-align: center;'>All other marks are the property of their respective owners.</div>
+
+</body>
+</html>
