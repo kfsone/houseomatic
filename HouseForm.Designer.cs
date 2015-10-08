@@ -38,6 +38,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HouseForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -48,6 +54,7 @@
             this.openDlg = new System.Windows.Forms.OpenFileDialog();
             this.dataRows = new System.Data.DataSet();
             this.itemGrid = new System.Windows.Forms.DataGridView();
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvXPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvZPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,7 +64,6 @@
             this.dgvRoll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvCrated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemGrid)).BeginInit();
@@ -75,7 +81,7 @@
             this.itemSelect});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(784, 25);
+            this.toolStrip.Size = new System.Drawing.Size(846, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -159,7 +165,7 @@
             this.itemGrid.RowHeadersWidth = 14;
             this.itemGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.itemGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.itemGrid.Size = new System.Drawing.Size(784, 337);
+            this.itemGrid.Size = new System.Drawing.Size(846, 337);
             this.itemGrid.TabIndex = 1;
             this.itemGrid.Visible = false;
             this.itemGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.itemGrid_CellValidating);
@@ -172,116 +178,126 @@
             // 
             this.dgvName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvName.DataPropertyName = "Name";
-            this.dgvName.FillWeight = 95F;
+            this.dgvName.FillWeight = 27F;
             this.dgvName.HeaderText = "Name";
             this.dgvName.Name = "dgvName";
             this.dgvName.ReadOnly = true;
             // 
             // dgvXPos
             // 
-            this.dgvXPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvXPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvXPos.DataPropertyName = "XPos";
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N3";
+            dataGridViewCellStyle1.Format = "N8";
             dataGridViewCellStyle1.NullValue = null;
             this.dgvXPos.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvXPos.FillWeight = 90F;
+            this.dgvXPos.FillWeight = 11F;
             this.dgvXPos.HeaderText = "Left/Right";
-            this.dgvXPos.MaxInputLength = 15;
+            this.dgvXPos.MaxInputLength = 20;
             this.dgvXPos.Name = "dgvXPos";
             this.dgvXPos.ToolTipText = "Position across the width of the building.";
-            this.dgvXPos.Width = 80;
             // 
             // dgvZPos
             // 
-            this.dgvZPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvZPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvZPos.DataPropertyName = "ZPos";
-            this.dgvZPos.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvZPos.FillWeight = 90F;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N8";
+            dataGridViewCellStyle2.NullValue = null;
+            this.dgvZPos.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvZPos.FillWeight = 11F;
             this.dgvZPos.HeaderText = "Up/Down";
-            this.dgvZPos.MaxInputLength = 15;
+            this.dgvZPos.MaxInputLength = 20;
             this.dgvZPos.Name = "dgvZPos";
             this.dgvZPos.ToolTipText = "Height within the building.";
-            this.dgvZPos.Width = 79;
             // 
             // dgvYPos
             // 
-            this.dgvYPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvYPos.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvYPos.DataPropertyName = "YPos";
-            this.dgvYPos.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvYPos.FillWeight = 90F;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N8";
+            dataGridViewCellStyle3.NullValue = null;
+            this.dgvYPos.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvYPos.FillWeight = 11F;
             this.dgvYPos.HeaderText = "Fwd/Back";
-            this.dgvYPos.MaxInputLength = 15;
+            this.dgvYPos.MaxInputLength = 20;
             this.dgvYPos.Name = "dgvYPos";
             this.dgvYPos.ToolTipText = "Distance away from the entrance of the building.";
-            this.dgvYPos.Width = 82;
             // 
             // dgvRotation
             // 
-            this.dgvRotation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvRotation.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvRotation.DataPropertyName = "XRot";
-            this.dgvRotation.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvRotation.FillWeight = 90F;
-            this.dgvRotation.HeaderText = "Rotate";
-            this.dgvRotation.MaxInputLength = 9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N8";
+            dataGridViewCellStyle4.NullValue = null;
+            this.dgvRotation.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvRotation.FillWeight = 9F;
+            this.dgvRotation.HeaderText = "Turn";
+            this.dgvRotation.MaxInputLength = 14;
             this.dgvRotation.Name = "dgvRotation";
-            this.dgvRotation.ToolTipText = "Controls which way the object is facing.";
-            this.dgvRotation.Width = 64;
+            this.dgvRotation.ToolTipText = "Changes which direction the object is facing along it's horizontal axis - like turning your head.";
             // 
             // dgvPitch
             // 
-            this.dgvPitch.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvPitch.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvPitch.DataPropertyName = "ZRot";
-            this.dgvPitch.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvPitch.FillWeight = 90F;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N8";
+            dataGridViewCellStyle5.NullValue = null;
+            this.dgvPitch.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvPitch.FillWeight = 9F;
             this.dgvPitch.HeaderText = "Pitch";
-            this.dgvPitch.MaxInputLength = 9;
+            this.dgvPitch.MaxInputLength = 14;
             this.dgvPitch.Name = "dgvPitch";
-            this.dgvPitch.ToolTipText = "Controls the object\'s rotation relative to the floor/ceiling.";
-            this.dgvPitch.Width = 56;
+            this.dgvPitch.ToolTipText = "Orients the object to face up or down, like looking up or down with your head.";
             // 
             // dgvRoll
             // 
-            this.dgvRoll.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvRoll.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvRoll.DataPropertyName = "YRot";
-            this.dgvRoll.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvRoll.FillWeight = 90F;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N8";
+            dataGridViewCellStyle6.NullValue = null;
+            this.dgvRoll.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvRoll.FillWeight = 9F;
             this.dgvRoll.HeaderText = "Roll";
-            this.dgvRoll.MaxInputLength = 9;
+            this.dgvRoll.MaxInputLength = 14;
             this.dgvRoll.Name = "dgvRoll";
-            this.dgvRoll.ToolTipText = "Controls the object\'s roll.";
-            this.dgvRoll.Width = 50;
+            this.dgvRoll.ToolTipText = "Turns the object around like turning the wheel in your car or tilting your head to one side.";
             // 
             // dgvScale
             // 
-            this.dgvScale.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvScale.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvScale.DataPropertyName = "Scale";
-            this.dgvScale.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvScale.FillWeight = 75F;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N8";
+            dataGridViewCellStyle7.NullValue = null;
+            this.dgvScale.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dgvScale.FillWeight = 8F;
             this.dgvScale.HeaderText = "Scale";
-            this.dgvScale.MaxInputLength = 7;
+            this.dgvScale.MaxInputLength = 12;
             this.dgvScale.Name = "dgvScale";
             this.dgvScale.ToolTipText = "Controls how large the object will appear.";
-            this.dgvScale.Width = 59;
             // 
             // dgvCrated
             // 
-            this.dgvCrated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgvCrated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvCrated.DataPropertyName = "Crated";
             this.dgvCrated.FalseValue = "false";
-            this.dgvCrated.FillWeight = 20F;
+            this.dgvCrated.FillWeight = 5F;
             this.dgvCrated.HeaderText = "Crated";
             this.dgvCrated.Name = "dgvCrated";
             this.dgvCrated.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvCrated.ToolTipText = "Check to hide the object by putting it into the moving crate!";
             this.dgvCrated.TrueValue = "true";
-            this.dgvCrated.Width = 63;
             // 
             // HouseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 362);
+            this.ClientSize = new System.Drawing.Size(846, 362);
             this.Controls.Add(this.itemGrid);
             this.Controls.Add(this.toolStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -308,6 +324,8 @@
         private System.Windows.Forms.BindingSource bs;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripComboBox itemSelect;
+        private System.Windows.Forms.ToolStripLabel modeLabel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvXPos;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvZPos;
@@ -317,8 +335,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvRoll;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvScale;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dgvCrated;
-        private System.Windows.Forms.ToolStripLabel modeLabel;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

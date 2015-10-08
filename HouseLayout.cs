@@ -9,10 +9,10 @@ namespace houseOmatic
     public class HouseLayout : IDisposable
     {
         #region Constants.
-        public enum ColumnPosition :int
+        public enum ColumnPosition : int
         {
             TypeID, UID, XPos, ZPos, YPos, XRot, ZRot, YRot, Scale, Crated, Name
-        ,   Max
+        , Max
         };
 
         public const int SupportedVersionNumber = 6;
@@ -153,9 +153,11 @@ namespace houseOmatic
                 dataset = new DataSet();
             }
 
+            // How many places to round decimals to
+            Decimal decimalPlaces = Decimal.Parse("1.0e8", System.Globalization.NumberStyles.Any);
+
             // New table to work in.
             DataTable dt = new DataTable(filename);
-
             try
             {
                 // Populate the columns from the ColumnNames list.
@@ -180,11 +182,11 @@ namespace houseOmatic
                     {
                         string value = row[i];
 
-                        // Truncate decimal columns to 3 places.
+                        // Truncate decimal columns to N places.
                         if (ColumnTypes[i] == "Decimal")
                         {
                             Decimal dv = Convert.ToDecimal(value);
-                            dv = Math.Floor(dv * 1000) / 1000;
+                            dv = Math.Floor(dv * decimalPlaces) / decimalPlaces;
                             value = Convert.ToString(dv);
                             row[i] = value;
                         }
@@ -274,9 +276,9 @@ namespace houseOmatic
                 // Print the header line.
                 sw.WriteLine(String.Format("{0},{1}", SupportedVersionNumber, "Version Number"));
                 // Print the layout line.
-                sw.WriteLine(String.Format("{0},{1}", houseID, layoutName));
+                sw.WriteLine(String.Format("{0},{1} ", houseID, layoutName));
                 // v6: Print the house ID line.
-                sw.WriteLine(String.Format("{0}, {1}", uniqueHouseID, HouseIDTag));
+                sw.WriteLine(String.Format("{0}, {1} ", uniqueHouseID, HouseIDTag));
                 // Now write all of the data columns currently on display.
                 foreach (DataRow row in dataset.Tables[0].Rows)
                 {
@@ -286,14 +288,27 @@ namespace houseOmatic
                     int srcIndex = idToRowMap[String.Format("{0},{1}", items[0].ToString(), items[1].ToString())];
                     var srcRow = rows[srcIndex];
                     for (int i = 0; i < items.Length; ++i)
-                        srcRow[i] = items[i].ToString();
+                    {
+                        switch (ColumnTypes[i])
+                        {
+                            case "Decimal":
+                            {
+                                Decimal d = Convert.ToDecimal(items[i]);
+                                srcRow[i] = d.ToString("0.00000000");
+                                break;
+                            }
+                            default:
+                                srcRow[i] = items[i].ToString().Trim();
+                                break;
+                        }
+                    }
 
                     // Quote the name.
                     int NameIdx = (int)ColumnPosition.Name;
-                    items[NameIdx] = String.Format("\"{0}\"", items[NameIdx]);
+                    srcRow[NameIdx] = String.Format("\"{0}\"", items[NameIdx]);
 
                     // Save the row.
-                    sw.WriteLine(String.Join(",", items));
+                    sw.WriteLine(String.Join(",", srcRow));
                 }
             }
             finally
