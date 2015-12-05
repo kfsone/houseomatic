@@ -262,17 +262,18 @@ namespace houseOmatic
         public void SaveData(bool allData)
         {
             StreamWriter sw = null;
+            string tempFilename = filename + ".new";
             try
             {
-                try
-                {
-                    sw = new StreamWriter(filename);
-                }
-                catch (System.IO.IOException)
-                {
-                    throw new CSVError("I was unable to write to the layout file; do you have it open in another program?");
-                }
+                sw = new StreamWriter(tempFilename);
+            }
+            catch (IOException)
+            {
+                throw new CSVError("I was unable to write to the layout file; do you have it open in another program?");
+            }
 
+            try
+            {
                 // Print the header line.
                 sw.WriteLine(String.Format("{0},{1}", SupportedVersionNumber, "Version Number"));
                 // Print the layout line.
@@ -310,12 +311,33 @@ namespace houseOmatic
                     // Save the row.
                     sw.WriteLine(String.Join(",", srcRow));
                 }
+
+                sw.Close();
             }
-            finally
+            catch (Exception)
             {
-                if (sw != null)
+                File.Delete(tempFilename);
+                throw;
+            }
+
+            if (File.Exists(filename))
+            {
+                string backup01 = filename + ".backup01";
+                string backup02 = filename + ".backup02";
+                try
                 {
-                    sw.Close();
+                    File.Delete(backup02);
+                    File.Move(backup01, backup02);
+                }
+                catch (IOException) { }
+                try
+                {
+                    File.Move(filename, backup01);
+                    File.Move(tempFilename, filename);
+                }
+                catch (IOException)
+                {
+                    throw new CSVError("There was a problem saving your file - it has been saved as " + tempFilename + " instead.");
                 }
             }
 
