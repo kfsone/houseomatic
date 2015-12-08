@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("KingFisher Software")]
 [assembly: AssemblyProduct("houseOmatic")]
-[assembly: AssemblyCopyright("Copyright © Oliver 'kfs1' Smith 2011")]
+[assembly: AssemblyCopyright("Copyright © Oliver 'kfs1' Smith 2011-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

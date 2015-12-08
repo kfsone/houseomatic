@@ -1,23 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Deployment.Application;
 using System.IO;
 using System.Windows.Forms;
 
-namespace houseOmatic
-{
-    public partial class HouseForm : Form
-    {
+namespace houseOmatic {
+    public partial class HouseForm : Form {
         public HouseForm()
         {
             InitializeComponent();
             GuessDefaultPath();
             formName = this.Text;
-            try
-            {
+            try {
                 this.Text = formName + " version " + ApplicationDeployment.CurrentDeployment.CurrentVersion;
-            }
-            catch (InvalidDeploymentException)
-            {
+            } catch (InvalidDeploymentException) {
                 this.Text = formName + " [development build]";
             }
         }
@@ -25,6 +21,7 @@ namespace houseOmatic
         #region Data
         private string formName;
         private int selectedItemIndex = 0;
+        private HashSet<int> groupedItems = new HashSet<int>();
 
         private HouseLayout layout = new HouseLayout();
         #endregion
@@ -44,13 +41,10 @@ namespace houseOmatic
             // I'm an Extended convert myself, so look there first.
             string[] gamePaths = { "EverQuest II Extended", "EverQuest II" };
 
-            foreach (string basePath in basePaths)
-            {
-                foreach (string gamePath in gamePaths)
-                {
+            foreach (string basePath in basePaths) {
+                foreach (string gamePath in gamePaths) {
                     string path = basePath + "\\" + sonyPath + "\\" + gamePath + "\\" + "saved_house_layouts";
-                    if ( Directory.Exists(path) )
-                    {
+                    if (Directory.Exists(path)) {
                         openDlg.InitialDirectory = path;
                         return;
                     }
@@ -68,8 +62,7 @@ namespace houseOmatic
             // If there are outstanding changes, make sure the user
             // wants to lose any changes they have currently pending
             // before we go ahead and clear things out.
-            if (layout.PendingChanges || layout.NeedFullSave)
-            {
+            if (layout.PendingChanges || layout.NeedFullSave) {
                 var proceed = MessageBox.Show("If you proceed, your current pending changes will be lost.\n\nAre you sure you want to load a file?"
                                             , "Discard current changes?"
                                             , MessageBoxButtons.YesNo
@@ -85,8 +78,7 @@ namespace houseOmatic
             if (result != DialogResult.OK)
                 return;
 
-            try
-            {
+            try {
                 layout = new HouseLayout(openDlg.FileName);
 
                 itemSelect.Items.Clear();
@@ -98,10 +90,8 @@ namespace houseOmatic
                 ShowLayout("");
 
                 itemSelect.Focus();
-            }
-            catch (CSVError err)
-            {
-                string msg = String.Format("Unable to load the layout file you selected:\n\n{0}\n\nMake sure the file you selected was an EQ2 Saved House Layout.", err.Message);
+            } catch (CSVError err) {
+                string msg = $"Unable to load the layout file you selected:\n\n{err.Message}\n\nMake sure the file you selected was an EQ2 Saved House Layout.";
                 MessageBox.Show(msg, "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -114,7 +104,11 @@ namespace houseOmatic
         private void ShowLayout(string selectedName)
         {
             saveToolStripButton.Enabled = false;
+            saveAsToolStripButton.Enabled = true;
             modeLabel.Text = (selectedName == "" ? "File Mode" : "Item Mode");
+
+            groupCountLabel.Text = "";
+            groupedItems.Clear();
 
             itemGrid.Hide();
 
@@ -128,6 +122,7 @@ namespace houseOmatic
             itemGrid.Show();
 
             saveToolStripButton.Enabled = layout.CanSave(selectedItemIndex > 0);
+
         }
 
         /// <summary>
@@ -137,13 +132,11 @@ namespace houseOmatic
         /// <param name="e">Event.</param>
         private void itemSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ( itemSelect.SelectedIndex == selectedItemIndex )
-                return ;
+            if (itemSelect.SelectedIndex == selectedItemIndex)
+                return;
 
-            if (layout.PendingChanges == true)
-            {
-                if (MessageBox.Show("Changes you've made will be lost. Do you want to continue WITHOUT saving?", "Lose your changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                {
+            if (layout.PendingChanges == true) {
+                if (MessageBox.Show("Changes you've made will be lost. Do you want to continue WITHOUT saving?", "Lose your changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) {
                     itemSelect.SelectedIndex = selectedItemIndex;
                     return;
                 }
@@ -169,8 +162,7 @@ namespace houseOmatic
             // Get number of cells selected.
             DataGridView dgv = (DataGridView)sender;
             Int32 selectCount = dgv.GetCellCount(DataGridViewElementStates.Selected);
-            for (var i = 0; i < selectCount; ++i)
-            {
+            for (var i = 0; i < selectCount; ++i) {
                 var cell = dgv.SelectedCells[i];
                 // Only clone changes in same column.
                 if (cell.ColumnIndex != e.ColumnIndex)
@@ -190,7 +182,7 @@ namespace houseOmatic
         /// <param name="e">error</param>
         private void itemGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            MessageBox.Show(String.Format("Invalid input value: {0}", e.Exception.Message), "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Invalid input value: {e.Exception.Message}", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             itemGrid.CancelEdit();
         }
 
@@ -209,12 +201,10 @@ namespace houseOmatic
         private void itemGrid_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             string colName = itemGrid.Columns[e.ColumnIndex].Name;
-            if (colName == "dgvScale")
-            {
+            if (colName == "dgvScale") {
                 object o = e.FormattedValue;
                 var d = Convert.ToDouble(o);
-                if (d <= 0 || d > 100)
-                {
+                if (d <= 0 || d > 100) {
                     MessageBox.Show("Scale has to be greater than zero and less than 100, more or less.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     e.Cancel = true;
                     itemGrid.CancelEdit();
@@ -228,24 +218,62 @@ namespace houseOmatic
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             bool allData = (bool)(itemSelect.SelectedIndex == 0);
-            layout.SaveData(allData);
+            layout.SaveData(layout.Filename, allData);
             saveToolStripButton.Enabled = layout.CanSave(selectedItemIndex > 0);
+        }
+        private void saveAsToolStripButton_Click(object sender, EventArgs e)
+        {
+            // Ask the user to locate the file they want to load.
+            var result = saveAsDlg.ShowDialog();
+            // If they didn't click OK, don't do anything else,
+            // keep all the state etc we currently have.
+            if (result != DialogResult.OK)
+                return;
+
+            bool allData = (bool)(itemSelect.SelectedIndex == 0);
+
+            try {
+                layout.SaveData(saveAsDlg.FileName, allData);
+            } catch (CSVError err) {
+                string msg = $"Unable to save the layout file you selected:\n\n{err.Message}\n";
+                MessageBox.Show(msg, "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void itemGrid_SelectionChanged(object sender, EventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
             Int32 selectCount = dgv.GetCellCount(DataGridViewElementStates.Selected);
-            if ( selectCount <= 0 )
+            if (selectCount <= 0)
                 return;
 
-            for (var i = 1; i < selectCount; ++i)
-            {
+            for (var i = HouseLayout.InternalColumns; i < selectCount; ++i) {
                 var cell = dgv.SelectedCells[i];
                 cell.Style.SelectionBackColor = System.Drawing.Color.SlateGray;
             }
 
             dgv.SelectedCells[0].Style.SelectionBackColor = System.Drawing.Color.SlateBlue;
+        }
+
+        private void itemGrid_CellStateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
+        {
+        }
+
+        private void itemGrid_ToggleItemGroupMembership(object sender, DataGridViewCellEventArgs e)
+        {
+            if (groupedItems.Contains(e.RowIndex))
+                groupedItems.Remove(e.RowIndex);
+            else
+                groupedItems.Add(e.RowIndex);
+
+            var numGroupedItems = groupedItems.Count;
+            if (numGroupedItems == 0) {
+                // Nothing grouped, empty label.
+                groupCountLabel.Text = "";
+            } else {
+                groupCountLabel.Text = $"Group of {numGroupedItems:n0}";
+            }
         }
     }
 }

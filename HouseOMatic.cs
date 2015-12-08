@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace houseOmatic
-{
+namespace houseOmatic {
     [Serializable]
-    public class CSVError : Exception
-    {
-        public CSVError() : base() { }
-        public CSVError(string msg) : base(msg) { }
-        public CSVError(string msg, Exception inner) : base(msg, inner) { }
+    public class CSVError : Exception {
+        public CSVError() : base()
+        { }
+        public CSVError(string msg) : base(msg)
+        { }
+        public CSVError(string msg, Exception inner) : base(msg, inner)
+        { }
     }
 
-    static class HouseOMatic
-    {
+    static class HouseOMatic {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -39,14 +39,10 @@ namespace houseOmatic
             if (fi.Exists == false)
                 return;
             var lastReadMeUpdate = fi.LastWriteTimeUtc.ToBinary();
-            if(lastReadMeUpdate > Properties.Settings.Default.lastShowedReadme)
-            {
-                try
-                {
+            if (lastReadMeUpdate > Properties.Settings.Default.lastShowedReadme) {
+                try {
                     System.Diagnostics.Process.Start("ReadMe.htm");
-                }
-                catch
-                {
+                } catch {
                     MessageBox.Show("I was going to show you the new readme, but there was an error =/", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
                 Properties.Settings.Default.lastShowedReadme = lastReadMeUpdate + 1;

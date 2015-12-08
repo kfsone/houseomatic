@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>125, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="openToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -153,11 +153,31 @@
         AElFTkSuQmCC
 </value>
   </data>
+  <data name="saveAsToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHfSURBVDhPtZHdT5JhGIf5rzTbyqbW0uoVzJDZCHDOeqMt
+        hhEHtYItzTVNDLBUIKYBM/nwg6gtPSyaJ57gcrO2PoYtGThGk5S4Amoly96Dtq6z536e33Xvvh/Zf6Hf
+        MY15wIvF5uNnSRYKfmF9PU8ikSP+Ks1Z9dNfdxXO9dorBeueUBlNr6Nydk2kKPN1p8Cbj1sIymi1QLgw
+        zOmLg9XFPYyPbTI7n8TpfY3pTpxjp/zVb0/03EM4b6NNHNpXYhtOob88xyXTKF1ikIamsb822xejcXVV
+        6JjA2j+DQjlCbZ3ltyC6kGNuNsfSUpZYLEMkvEnAn8Ttfs8V0wqiGJfuFg5lCYe2K0sqUywW2S18I5PN
+        oxGfoFA8khb4fWn8vq0/wuVt6wxxlMqgtMDt+sxDz6cf4d1CKbxdCmdYTmwg716kVT4lLRh1JpmaTDMf
+        3cA/867yVbccKxgHXtCsitHcMi4tGBr8UBphh+s311D3RGjXTSOofTS2hTkpj9J0dERaYLW85cH9PCbz
+        Sw42dGK8ZsfueYZKE6bx+GMO1d+WFpivrtHXl6Kze4F2rQFPIEog8hxBNUntYQ8H6m5IC/Tisl6rXaSl
+        1cuZDie6LhcdqrvUH7FWwjU1BmnBvyOTfQdrA02/DE1J3gAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="openDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>122, 17</value>
+    <value>223, 17</value>
+  </metadata>
+  <metadata name="saveAsDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <metadata name="dataRows.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>220, 17</value>
+    <value>321, 17</value>
+  </metadata>
+  <metadata name="dvgGroup.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
   <metadata name="dgvName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -187,7 +207,7 @@
     <value>True</value>
   </metadata>
   <metadata name="bs.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>324, 17</value>
+    <value>425, 17</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

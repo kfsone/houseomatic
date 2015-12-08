@@ -1,7 +1,5 @@
-﻿namespace houseOmatic
-{
-    partial class HouseForm
-    {
+﻿namespace houseOmatic {
+    partial class HouseForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -14,13 +12,11 @@
         protected override void Dispose(bool disposing)
         {
             // Dispose of components.
-            if (disposing && (components != null))
-            {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             // Dispose of the house layout we created.
-            if (disposing && (layout != null))
-            {
+            if (disposing && (layout != null)) {
                 layout.Dispose();
             }
             // Call parent class Dispose.
@@ -47,14 +43,17 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveAsToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.modeLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.itemSelect = new System.Windows.Forms.ToolStripComboBox();
+            this.groupCountLabel = new System.Windows.Forms.ToolStripLabel();
             this.openDlg = new System.Windows.Forms.OpenFileDialog();
+            this.saveAsDlg = new System.Windows.Forms.SaveFileDialog();
             this.dataRows = new System.Data.DataSet();
             this.itemGrid = new System.Windows.Forms.DataGridView();
-            this.bs = new System.Windows.Forms.BindingSource(this.components);
+            this.dvgGroup = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvXPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvZPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,6 +63,7 @@
             this.dgvRoll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvCrated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemGrid)).BeginInit();
@@ -75,13 +75,15 @@
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripButton,
             this.saveToolStripButton,
+            this.saveAsToolStripButton,
             this.toolStripSeparator,
             this.modeLabel,
             this.toolStripSeparator1,
-            this.itemSelect});
+            this.itemSelect,
+            this.groupCountLabel});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(846, 25);
+            this.toolStrip.Size = new System.Drawing.Size(890, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
             // 
@@ -103,6 +105,16 @@
             this.saveToolStripButton.Size = new System.Drawing.Size(51, 22);
             this.saveToolStripButton.Text = "&Save";
             this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+            // 
+            // saveAsToolStripButton
+            // 
+            this.saveAsToolStripButton.Enabled = false;
+            this.saveAsToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveAsToolStripButton.Image")));
+            this.saveAsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveAsToolStripButton.Name = "saveAsToolStripButton";
+            this.saveAsToolStripButton.Size = new System.Drawing.Size(67, 22);
+            this.saveAsToolStripButton.Text = "Save &As";
+            this.saveAsToolStripButton.Click += new System.EventHandler(this.saveAsToolStripButton_Click);
             // 
             // toolStripSeparator
             // 
@@ -130,6 +142,11 @@
             this.itemSelect.Size = new System.Drawing.Size(300, 25);
             this.itemSelect.SelectedIndexChanged += new System.EventHandler(this.itemSelect_SelectedIndexChanged);
             // 
+            // groupCountLabel
+            // 
+            this.groupCountLabel.Name = "groupCountLabel";
+            this.groupCountLabel.Size = new System.Drawing.Size(0, 22);
+            // 
             // openDlg
             // 
             this.openDlg.AddExtension = false;
@@ -148,6 +165,7 @@
             this.itemGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.itemGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.itemGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dvgGroup,
             this.dgvName,
             this.dgvXPos,
             this.dgvZPos,
@@ -165,14 +183,32 @@
             this.itemGrid.RowHeadersWidth = 14;
             this.itemGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.itemGrid.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.itemGrid.Size = new System.Drawing.Size(846, 337);
+            this.itemGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.itemGrid.Size = new System.Drawing.Size(890, 337);
             this.itemGrid.TabIndex = 1;
             this.itemGrid.Visible = false;
+            this.itemGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.itemGrid_ToggleItemGroupMembership);
+            this.itemGrid.CellStateChanged += new System.Windows.Forms.DataGridViewCellStateChangedEventHandler(this.itemGrid_CellStateChanged);
             this.itemGrid.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.itemGrid_CellValidating);
             this.itemGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.itemGrid_CellValueChanged);
             this.itemGrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.itemGrid_CurrentCellDirtyStateChanged);
             this.itemGrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.itemGrid_DataError);
             this.itemGrid.SelectionChanged += new System.EventHandler(this.itemGrid_SelectionChanged);
+            // 
+            // dvgGroup
+            // 
+            this.dvgGroup.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dvgGroup.DataPropertyName = "Group";
+            this.dvgGroup.DividerWidth = 2;
+            this.dvgGroup.FalseValue = "false";
+            this.dvgGroup.FillWeight = 5F;
+            this.dvgGroup.HeaderText = "+";
+            this.dvgGroup.Name = "dvgGroup";
+            this.dvgGroup.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dvgGroup.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dvgGroup.ToolTipText = "Allows movement of multiple items at the same time.";
+            this.dvgGroup.TrueValue = "true";
+            this.dvgGroup.Width = 24;
             // 
             // dgvName
             // 
@@ -237,7 +273,8 @@
             this.dgvRotation.HeaderText = "Turn";
             this.dgvRotation.MaxInputLength = 14;
             this.dgvRotation.Name = "dgvRotation";
-            this.dgvRotation.ToolTipText = "Changes which direction the object is facing along it's horizontal axis - like turning your head.";
+            this.dgvRotation.ToolTipText = "Changes which direction the object is facing along it\'s horizontal axis - like tu" +
+    "rning your head.";
             // 
             // dgvPitch
             // 
@@ -265,7 +302,8 @@
             this.dgvRoll.HeaderText = "Roll";
             this.dgvRoll.MaxInputLength = 14;
             this.dgvRoll.Name = "dgvRoll";
-            this.dgvRoll.ToolTipText = "Turns the object around like turning the wheel in your car or tilting your head to one side.";
+            this.dgvRoll.ToolTipText = "Turns the object around like turning the wheel in your car or tilting your head t" +
+    "o one side.";
             // 
             // dgvScale
             // 
@@ -297,7 +335,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(846, 362);
+            this.ClientSize = new System.Drawing.Size(890, 362);
             this.Controls.Add(this.itemGrid);
             this.Controls.Add(this.toolStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -317,15 +355,14 @@
 
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton openToolStripButton;
-        private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.OpenFileDialog openDlg;
+        private System.Windows.Forms.SaveFileDialog saveAsDlg;
         private System.Data.DataSet dataRows;
         private System.Windows.Forms.DataGridView itemGrid;
         private System.Windows.Forms.BindingSource bs;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripComboBox itemSelect;
         private System.Windows.Forms.ToolStripLabel modeLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dvgGroup;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvXPos;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvZPos;
@@ -335,6 +372,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvRoll;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvScale;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dgvCrated;
+        private System.Windows.Forms.ToolStripComboBox itemSelect;
+        private System.Windows.Forms.ToolStripButton saveAsToolStripButton;
+        private System.Windows.Forms.ToolStripButton saveToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripLabel groupCountLabel;
     }
 }
 

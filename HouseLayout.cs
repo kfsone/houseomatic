@@ -4,13 +4,10 @@ using System.Data;
 using System.IO;
 using System.Linq;
 
-namespace houseOmatic
-{
-    public class HouseLayout : IDisposable
-    {
+namespace houseOmatic {
+    public class HouseLayout : IDisposable {
         #region Constants.
-        public enum ColumnPosition : int
-        {
+        public enum ColumnPosition : int {
             TypeID, UID, XPos, ZPos, YPos, XRot, ZRot, YRot, Scale, Crated, Name
         , Max
         };
@@ -19,11 +16,12 @@ namespace houseOmatic
         public const string HouseIDTag = "Unique House ID.";
         private string[] ColumnNames = { "TypeID", "HouseID", "XPos", "ZPos", "YPos", "XRot", "ZRot", "YRot", "Scale", "Crated", "Name" };
         private string[] ColumnTypes = { "UInt64", "UInt64", "Decimal", "Decimal", "Decimal", "Decimal", "Decimal", "Decimal", "Decimal", "String", "String" };
+        public const int InternalColumns = 1; // Group
         #endregion
 
         #region Constructors.
         public HouseLayout()
-        {   
+        {
             pendingChanges = false;
             needSelectionSave = false;
             needFullSave = false;
@@ -34,7 +32,7 @@ namespace houseOmatic
             Dispose(false);
         }
 
-#region IDisposable
+        #region IDisposable
         private bool disposed = false;
 
         public void Dispose()
@@ -45,14 +43,14 @@ namespace houseOmatic
 
         protected virtual void Dispose(bool disposing)
         {
-            if (this.disposed) return;
-            if (disposing)
-            {
+            if (this.disposed)
+                return;
+            if (disposing) {
                 dataset.Dispose();
             }
             disposed = true;
         }
-#endregion
+        #endregion
 
         public bool CanSave(bool partial)
         {
@@ -74,15 +72,11 @@ namespace houseOmatic
             // Count the line we're currently on.
             lineNo = 0;
             StreamReader sr = null;
-            try
-            {
+            try {
                 // Lets see if we can open the file.
-                try
-                {
+                try {
                     sr = new StreamReader(filename);
-                }
-                catch (FileNotFoundException)
-                {
+                } catch (FileNotFoundException) {
                     throw new CSVError("The layout file is either missing or not accessible.\n\nDid you erase the file?");
                 }
 
@@ -96,8 +90,7 @@ namespace houseOmatic
                 ReadHouseIDLine(sr);
 
                 // Keep going until there doesn't appear to be anything left.
-                while (sr.Peek() >= 0)
-                {
+                while (sr.Peek() >= 0) {
                     // Get the next row from the stream.
                     string[] row = ReadRow(sr, (int)ColumnPosition.Max);
                     // Check it had the expected number of columns.
@@ -107,7 +100,7 @@ namespace houseOmatic
                     // Create an ID from the first two columns.
                     string id = String.Format("{0},{1}", row[0], row[1]);
                     // Make sure this ID hasn't already been assigned.
-                    if(idToRowMap.ContainsKey(id))
+                    if (idToRowMap.ContainsKey(id))
                         throw new CSVError(String.Format("Duplicate ID for '{0}' ({1},{2}) on line {3}", row[(int)ColumnPosition.Name], row[0], row[1], lineNo));
 
                     // Add the id<->row number mapping/
@@ -119,19 +112,12 @@ namespace houseOmatic
 
                 if (rows.Count == 0)
                     throw new CSVError("The layout file appears to be empty - was there anything in your house?");
-            }
-            catch (System.IO.IOException e)
-            {
+            } catch (System.IO.IOException e) {
                 throw new CSVError(String.Format("There was a system error reading the layout file: {0}", e.Message));
-            }
-            catch (System.OutOfMemoryException)
-            {
+            } catch (System.OutOfMemoryException) {
                 throw new CSVError("The computer ran out of memory trying to load the file. Either the file is too big or there is a bug ('memory in leak') in houseOmatic :(");
-            }
-            finally
-            {
-                if (sr != null)
-                {
+            } finally {
+                if (sr != null) {
                     sr.Close();
                 }
             }
@@ -147,8 +133,7 @@ namespace houseOmatic
         public void BuildDataSet(string itemName)
         {
             // Delete the old data set.
-            if (dataset != null)
-            {
+            if (dataset != null) {
                 dataset.Dispose();
                 dataset = new DataSet();
             }
@@ -158,18 +143,18 @@ namespace houseOmatic
 
             // New table to work in.
             DataTable dt = new DataTable(filename);
-            try
-            {
+            try {
                 // Populate the columns from the ColumnNames list.
-                for (int i = 0; i < ColumnNames.Length; ++i)
-                {
+                for (int i = 0; i < ColumnNames.Length; ++i) {
                     var newCol = new DataColumn(ColumnNames[i], Type.GetType("System." + ColumnTypes[i]));
                     dt.Columns.Add(newCol);
                 }
 
+                // Add internal columns
+                dt.Columns.Add(new DataColumn("Group", Type.GetType("System.Boolean")));
+
                 // Populate the rows.
-                for (int r = 0; r < rows.Count; ++r)
-                {
+                for (int r = 0; r < rows.Count; ++r) {
                     string[] row = rows[r];
                     // If an itemname is supplied, skip rows which don't match it.
                     if (itemName != "" && row[(int)ColumnPosition.Name] != itemName)
@@ -178,13 +163,11 @@ namespace houseOmatic
                     // Create a row.
                     DataRow dr = dt.NewRow();
                     // Copy cells across.
-                    for (int i = 0; i < ColumnNames.Length; ++i)
-                    {
+                    for (int i = 0; i < ColumnNames.Length; ++i) {
                         string value = row[i];
 
                         // Truncate decimal columns to N places.
-                        if (ColumnTypes[i] == "Decimal")
-                        {
+                        if (ColumnTypes[i] == "Decimal") {
                             Decimal dv = Convert.ToDecimal(value);
                             dv = Math.Floor(dv * decimalPlaces) / decimalPlaces;
                             value = Convert.ToString(dv);
@@ -192,8 +175,7 @@ namespace houseOmatic
                         }
 
                         // Strings need quotes trimming off the start/end.
-                        if (i == (int)ColumnPosition.Name)
-                        {
+                        if (i == (int)ColumnPosition.Name) {
                             value = value.Trim(new char[] { '"' });
                             rows[r][i] = value;
                         }
@@ -216,9 +198,7 @@ namespace houseOmatic
                 // provide the user with the opportunity to save
                 // *just* this list.
                 needSelectionSave = (itemName != "");
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 dt.Dispose();
                 throw;
             }
@@ -233,7 +213,8 @@ namespace houseOmatic
         {
             ///TODO:
             /// Go through and see if there are any changes outstanding.
-            pendingChanges = true;
+            if (columnIndex > InternalColumns)
+                pendingChanges = true;
         }
 
         /// <summary>
@@ -243,8 +224,7 @@ namespace houseOmatic
         public string[] ItemNames()
         {
             List<string> names = new List<string>();
-            foreach (var row in rows)
-            {
+            foreach (var row in rows) {
                 names.Add(row[(int)ColumnPosition.Name].Trim(new char[] { '"' }));
             }
             names = names.Distinct().ToList();
@@ -259,21 +239,17 @@ namespace houseOmatic
         /// to repopulate the file completely.
         /// </summary>
         /// <param name="allData"></param>
-        public void SaveData(bool allData)
+        public void SaveData(string dest, bool allData)
         {
             StreamWriter sw = null;
-            string tempFilename = filename + ".new";
-            try
-            {
+            string tempFilename = dest + ".new";
+            try {
                 sw = new StreamWriter(tempFilename);
-            }
-            catch (IOException)
-            {
+            } catch (IOException) {
                 throw new CSVError("I was unable to write to the layout file; do you have it open in another program?");
             }
 
-            try
-            {
+            try {
                 // Print the header line.
                 sw.WriteLine(String.Format("{0},{1}", SupportedVersionNumber, "Version Number"));
                 // Print the layout line.
@@ -281,23 +257,20 @@ namespace houseOmatic
                 // v6: Print the house ID line.
                 sw.WriteLine(String.Format("{0}, {1} ", uniqueHouseID, HouseIDTag));
                 // Now write all of the data columns currently on display.
-                foreach (DataRow row in dataset.Tables[0].Rows)
-                {
+                foreach (DataRow row in dataset.Tables[0].Rows) {
                     object[] items = row.ItemArray.ToArray();
 
                     // Update our 'rows' entry in the full data table.
                     int srcIndex = idToRowMap[String.Format("{0},{1}", items[0].ToString(), items[1].ToString())];
                     var srcRow = rows[srcIndex];
-                    for (int i = 0; i < items.Length; ++i)
-                    {
-                        switch (ColumnTypes[i])
-                        {
+                    for (int i = 0; i < ColumnTypes.Length; ++i) {
+                        switch (ColumnTypes[i]) {
                             case "Decimal":
-                            {
-                                Decimal d = Convert.ToDecimal(items[i]);
-                                srcRow[i] = d.ToString("0.00000000");
-                                break;
-                            }
+                                {
+                                    Decimal d = Convert.ToDecimal(items[i]);
+                                    srcRow[i] = d.ToString("0.00000000");
+                                    break;
+                                }
                             default:
                                 srcRow[i] = items[i].ToString().Trim();
                                 break;
@@ -313,32 +286,24 @@ namespace houseOmatic
                 }
 
                 sw.Close();
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 File.Delete(tempFilename);
                 throw;
             }
 
-            if (File.Exists(filename))
-            {
-                string backup01 = filename + ".backup01";
-                string backup02 = filename + ".backup02";
-                try
-                {
-                    File.Delete(backup02);
-                    File.Move(backup01, backup02);
+            try {
+                if (File.Exists(dest)) {
+                    string backup01 = dest + ".backup01";
+                    string backup02 = dest + ".backup02";
+                    try {
+                        File.Delete(backup02);
+                        File.Move(backup01, backup02);
+                    } catch (IOException) { }
+                    File.Move(dest, backup01);
                 }
-                catch (IOException) { }
-                try
-                {
-                    File.Move(filename, backup01);
-                    File.Move(tempFilename, filename);
-                }
-                catch (IOException)
-                {
-                    throw new CSVError("There was a problem saving your file - it has been saved as " + tempFilename + " instead.");
-                }
+                File.Move(tempFilename, dest);
+            } catch (IOException) {
+                throw new CSVError("There was a problem saving your changes - they have been saved as " + tempFilename + ".");
             }
 
             pendingChanges = false;
@@ -347,6 +312,8 @@ namespace houseOmatic
             // the user needs the opportunity to save
             // the full file back to disk again.
             needFullSave = !allData;
+
+            filename = dest;
         }
 
         #endregion
@@ -360,8 +327,7 @@ namespace houseOmatic
         /// <returns>The columns in the row as an array of strings.</returns>
         private string[] ReadRow(StreamReader sr, int maxNumColumns)
         {
-            while (sr.Peek() >= 0)
-            {
+            while (sr.Peek() >= 0) {
                 lineNo++;
 
                 string line = sr.ReadLine();
@@ -370,8 +336,8 @@ namespace houseOmatic
                 if (line.Length <= 0 || line[0] == ';' || line[0] == '#')
                     continue;
                 string[] columns = line.Split(',');
-                if ( columns.Length > maxNumColumns )
-                    Array.Resize(ref columns, maxNumColumns) ;
+                if (columns.Length > maxNumColumns)
+                    Array.Resize(ref columns, maxNumColumns);
                 for (var i = 0; i < columns.Length; ++i)
                     columns[i] = columns[i].Trim();
                 return columns;
